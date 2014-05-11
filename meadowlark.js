@@ -9,8 +9,17 @@ var fortune = require("./lib/fortune.js");
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 app.set("port", 3000);
+
 app.use(express.static(__dirname + "/public"));
 
+app.get("/headers", function(req, resp){
+	resp.set("Content-Type", "text/plain");
+	var s = "";
+	for (var name in req.headers) {
+		s += name + ":" + req.headers[name] + "\n";
+	}
+	resp.send(resp.json(s));
+});
 
 app.get("/", function(req, resp){
 	//resp.type("text/plain");
