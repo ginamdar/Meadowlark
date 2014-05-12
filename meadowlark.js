@@ -18,7 +18,7 @@ app.get("/headers", function(req, resp){
 	for (var name in req.headers) {
 		s += name + ":" + req.headers[name] + "\n";
 	}
-	resp.send(resp.json(s));
+	resp.send(s);
 });
 
 app.get("/", function(req, resp){
