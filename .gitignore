@@ -2,8 +2,6 @@
 node_modules
 *~
 .DS_Store
-
-=======
 # Logs
 logs
 *.log
@@ -24,9 +22,3 @@ coverage
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
-
-# Dependency directory
-# Deployed apps should consider commenting this line out:
-# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
-node_modules
->>>>>>> 79e475315c248df32b648131cbf5e1610b70f978
