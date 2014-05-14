@@ -14,6 +14,7 @@ var handlebars = require("express3-handlebars").create({defaultLayout:"main",
 				});
 var fortune = require("./lib/fortune.js");
 var bodyParser = require("body-parser");
+var formidable = require("formidable");
 
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
@@ -38,6 +39,23 @@ app.get("/test", function(req, resp){
 app.get("/enter", function(req, resp){
 	console.log("Enter");
 	resp.render("enter");
+});
+
+app.get("/fileupload", function(req, resp){
+	resp.render("fileupload");
+});
+
+app.post("/processfile", function(req, resp){
+	var form = new formidable.IncomingForm();
+	form.keepExtensions = true;
+	form.parse(req, function(err, fields, files){
+		if (err) return resp.redirect(302, "/404");
+		console.log("recieved fields:");
+		console.log(fields);
+		console.log("recieved files");
+		console.log(files);
+		resp.redirect(302, "/thankyou");
+	});
 });
 
 app.get("/thankyou", function(req, resp){
