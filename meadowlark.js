@@ -49,7 +49,14 @@ app.post("/process", function(req, resp){
 	console.log("Test (from querystring): " + req.query.test);
 	console.log("Hush (from hidden form field): " + req.body.hush);
 	console.log("Test (from visible form field): " + req.body.name);
-	resp.redirect(302, "thankyou");
+	//resp.redirect(302, "thankyou");
+	if(req.xhr || req.accepts('json,html')==='json'){
+	        // if there were an error, we would send { error: 'error description' }
+	        resp.send({ success: true });
+	    } else {
+	        // if there were an error, we would redirect to an error page
+	        resp.redirect(302, '/thankyou');
+	    }
 });
 
 app.get("/", function(req, resp){

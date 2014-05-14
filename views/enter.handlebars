@@ -1,4 +1,5 @@
-<form action="/process?test=hello" method="POST">
+<div class="formContainer">
+<form id="formTest" action="/process?test=hello" method="POST">
     <input type="hidden" name="hush" value="hidden, but not secret">
     <div>
         <label for="fieldName">Name: </label>
@@ -8,3 +9,27 @@
         <button type="submit">Submit</button>
     </div>
 </form>
+</div>
+{{#section 'jquery'}}
+<script>
+$('#formTest').on('submit', function(evt){
+	evt.preventDefault();
+	var action = $(this).attr("action");
+	var $container = $(this).closest(".formContainer");
+	$.ajax({
+		url:action,
+		type:"POST",
+		success: function(data){
+			if (data.success){
+				$container.html("Thank you!");				
+			}else{
+				$container.html("Thank was a problem");				
+			}			
+		},
+		error : function(){
+			$container.html("Thank was a problem!");				
+		}
+	});
+});
+</script>
+{{/section}}
