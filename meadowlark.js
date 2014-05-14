@@ -15,6 +15,7 @@ var handlebars = require("express3-handlebars").create({defaultLayout:"main",
 var fortune = require("./lib/fortune.js");
 var bodyParser = require("body-parser");
 var formidable = require("formidable");
+var jqupload = require("jquery-file-upload-middleware"); 
 
 app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
@@ -22,6 +23,28 @@ app.set("port", 3000);
 
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser());
+
+
+app.use('/upload', function( req, res, next){ 
+	var now = Date.now(); 
+	jqupload.fileHandler({ 
+		uploadDir: function(){ 
+			return __dirname + '/public/uploads/' + now; 
+		}, 
+		uploadUrl: function(){ 
+			return '/uploads/' + now; 
+		}, 
+		imageVersions: {
+			thumbnail: {
+				width: 100,
+				height: 100
+			}
+		}
+	})( req, res, next); 
+});
+
+
+
 
 app.get("/headers", function(req, resp){
 	resp.set("Content-Type", "text/plain");
@@ -36,6 +59,10 @@ app.get("/test", function(req, resp){
 	resp.render("test");
 });
 
+app.get("/juploads", function(req, resp){
+	resp.render("juploads");
+});
+
 app.get("/enter", function(req, resp){
 	console.log("Enter");
 	resp.render("enter");
@@ -44,6 +71,8 @@ app.get("/enter", function(req, resp){
 app.get("/fileupload", function(req, resp){
 	resp.render("fileupload");
 });
+
+
 
 app.post("/processfile", function(req, resp){
 	var form = new formidable.IncomingForm();

@@ -1,0 +1,23 @@
+<input id="fileupload" type="file" name="fancyFiles" data-url="/upload" multiple="multiple"> 
+	<div id="uploads"> 
+	</div> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"> 
+</script> 
+<script src="/vendor/jquery-file-upload/js/jquery.ui.widget.js"> 
+</script> 
+<script src="/vendor/jquery-file-upload/js/jquery.iframe-transport.js"> 
+</script> 
+<script src="/vendor/jquery-file-upload/js/jquery.fileupload.js"> 
+</script> 
+<script>
+	//$( document).ready( function(){
+		$('#fileupload').fileupload({
+			dataType: 'json',
+			done: function( e, data){
+				$.each( data.result.files, function( index, file){ 
+					$('#uploads').append( $('<div class ="upload">' + file.name + '</div>')); 
+				}); 
+			}
+		});
+	//});
+</script>
