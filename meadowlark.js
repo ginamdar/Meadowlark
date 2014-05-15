@@ -43,9 +43,7 @@ app.use('/upload', function( req, res, next){
 	})( req, res, next); 
 });
 
-
-
-
+////ROUTES BEGIN//////////
 app.get("/headers", function(req, resp){
 	resp.set("Content-Type", "text/plain");
 	var s = "";
@@ -72,7 +70,20 @@ app.get("/fileupload", function(req, resp){
 	resp.render("fileupload");
 });
 
+app.get("/thankyou", function(req, resp){
+	console.log("thankyou");
+	resp.render("thankyou");
+});
 
+app.get("/", function(req, resp){
+	resp.render("home");
+});
+
+app.get("/about", function(req, resp){
+	resp.render("about", {fortune: fortune.getFortune()});
+});
+
+////ROUTES END//////////
 
 app.post("/processfile", function(req, resp){
 	var form = new formidable.IncomingForm();
@@ -87,10 +98,6 @@ app.post("/processfile", function(req, resp){
 	});
 });
 
-app.get("/thankyou", function(req, resp){
-	console.log("thankyou");
-	resp.render("thankyou");
-});
 
 app.post("/process", function(req, resp){
 	console.log("Test (from querystring): " + req.query.test);
@@ -106,13 +113,6 @@ app.post("/process", function(req, resp){
 	    }
 });
 
-app.get("/", function(req, resp){
-	resp.render("home");
-});
-
-app.get("/about", function(req, resp){
-	resp.render("about", {fortune: fortune.getFortune()});
-});
 
 app.use(function(req, resp, next){
 //	resp.type("text/plain");
